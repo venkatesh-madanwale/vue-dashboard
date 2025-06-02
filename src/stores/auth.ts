@@ -1,6 +1,13 @@
+// This file is part of the Vue.js application.
+// It defines a Pinia store for managing authentication state.
 import { defineStore } from "pinia";
-
-export const useAuthStore = defineStore('auth', {
+// Importing Pinia's defineStore function to create a store
+// Defining the initial state of the store
+// The store is used to manage authentication state in the application.
+// The state contains two properties:
+// - token: a string that holds the authentication token
+// - user: an object that holds user information or null if not authenticated
+export const useAuthStore = defineStore('auth', {// Defining a new store named 'auth'
     state: () => ({
         token: "",
         user: null as null | {
