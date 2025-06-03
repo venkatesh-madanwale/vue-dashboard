@@ -44,4 +44,19 @@ export class UserService {
         }
         return { message: 'User deleted successfully' };
     }
+
+    // update password by email
+    async updatePasswordByEmail(emailid: string, hashedPwd: string): Promise<User> {
+        const updatedUser = await this.userModel.findOneAndUpdate(
+            { emailid },
+            { pwd: hashedPwd },
+            { new: true }
+        );
+
+        if (!updatedUser) {
+            throw new NotFoundException(`User with email ${emailid} not found`);
+        }
+
+        return updatedUser;
+    }
 }

@@ -26,10 +26,10 @@ const auth_contoller_1 = __webpack_require__(11);
 const jwt_1 = __webpack_require__(6);
 const config_1 = __webpack_require__(9);
 const microservices_1 = __webpack_require__(7);
-const jwt_strategy_1 = __webpack_require__(15);
+const jwt_strategy_1 = __webpack_require__(16);
 const mailer_1 = __webpack_require__(10);
-const handlebars_adapter_1 = __webpack_require__(18);
-const path_1 = __webpack_require__(19);
+const handlebars_adapter_1 = __webpack_require__(19);
+const path_1 = __webpack_require__(20);
 let AuthModule = class AuthModule {
 };
 exports.AuthModule = AuthModule;
@@ -74,8 +74,8 @@ exports.AuthModule = AuthModule = __decorate([
                     host: "smtp.gmail.com",
                     secure: true,
                     auth: {
-                        user: "madanwalevenkateshj@gmail.com",
-                        pass: "mmxlachsojszmst",
+                        user: "serverdata516@gmail.com",
+                        pass: "avlvzrebujvjgmal"
                     },
                 },
                 defaults: {
@@ -195,15 +195,29 @@ let AuthService = class AuthService {
         }
         const payload = { emailid: user?.emailid };
         const token = this.jwtService.sign(payload);
-        const resetLink = `http://${this.configService.get('RESET_LINK')}:${this.configService.get('RESET_LINK_PORT')}/reset-password?token=${token}`;
         await this.mailerService.sendMail({
-            to: user.email,
+            to: user.emailid,
             subject: 'Reset your Password',
-            html: `<p>Click <a href = "${resetLink}">here</a> to reset your password</p>`
+            html: `<p>here is your token "${token}" to reset your password</p>`
         });
         return {
             msg: "Reset Link send Successfully"
         };
+    }
+    async resetPassword(token, newPassword) {
+        try {
+            const payload = this.jwtService.verify(token);
+            const user = await (0, rxjs_1.firstValueFrom)(this.userClient.send({ cmd: "find-by-email" }, payload.emailid));
+            if (!user) {
+                throw new common_1.NotFoundException("Invalid token or user no longer exists");
+            }
+            const hashedPassword = await bcrypt.hash(newPassword, 10);
+            await (0, rxjs_1.firstValueFrom)(this.userClient.send({ cmd: "update-password" }, { emailid: payload.emailid, pwd: hashedPassword }));
+            return { msg: "Password updated successfully" };
+        }
+        catch (err) {
+            throw new common_1.UnauthorizedException("Invalid or expired token");
+        }
     }
 };
 exports.AuthService = AuthService;
@@ -267,13 +281,14 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-var _a, _b, _c;
+var _a, _b, _c, _d;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.AuthController = void 0;
 const common_1 = __webpack_require__(3);
 const auth_service_1 = __webpack_require__(4);
 const register_dto_1 = __webpack_require__(12);
 const login_dto_1 = __webpack_require__(14);
+const resetPassword_dto_1 = __webpack_require__(15);
 let AuthController = class AuthController {
     authService;
     constructor(authService) {
@@ -290,6 +305,9 @@ let AuthController = class AuthController {
     }
     async forgotPassword(emailid) {
         return this.authService.sendResetLink({ emailid });
+    }
+    async resetPassword(dto) {
+        return this.authService.resetPassword(dto.token, dto.newPassword);
     }
 };
 exports.AuthController = AuthController;
@@ -321,6 +339,13 @@ __decorate([
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
 ], AuthController.prototype, "forgotPassword", null);
+__decorate([
+    (0, common_1.Post)('reset-password'),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [typeof (_d = typeof resetPassword_dto_1.ResetPasswordDto !== "undefined" && resetPassword_dto_1.ResetPasswordDto) === "function" ? _d : Object]),
+    __metadata("design:returntype", Promise)
+], AuthController.prototype, "resetPassword", null);
 exports.AuthController = AuthController = __decorate([
     (0, common_1.Controller)("auth"),
     __metadata("design:paramtypes", [typeof (_a = typeof auth_service_1.AuthService !== "undefined" && auth_service_1.AuthService) === "function" ? _a : Object])
@@ -430,12 +455,46 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.ResetPasswordDto = void 0;
+const class_validator_1 = __webpack_require__(13);
+class ResetPasswordDto {
+    token;
+    newPassword;
+}
+exports.ResetPasswordDto = ResetPasswordDto;
+__decorate([
+    (0, class_validator_1.IsNotEmpty)(),
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], ResetPasswordDto.prototype, "token", void 0);
+__decorate([
+    (0, class_validator_1.IsNotEmpty)(),
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], ResetPasswordDto.prototype, "newPassword", void 0);
+
+
+/***/ }),
+/* 16 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
 var _a;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.JwtStrategy = void 0;
 const common_1 = __webpack_require__(3);
-const passport_1 = __webpack_require__(16);
-const passport_jwt_1 = __webpack_require__(17);
+const passport_1 = __webpack_require__(17);
+const passport_jwt_1 = __webpack_require__(18);
 const config_1 = __webpack_require__(9);
 let JwtStrategy = class JwtStrategy extends (0, passport_1.PassportStrategy)(passport_jwt_1.Strategy) {
     configService;
@@ -465,25 +524,25 @@ exports.JwtStrategy = JwtStrategy = __decorate([
 
 
 /***/ }),
-/* 16 */
+/* 17 */
 /***/ ((module) => {
 
 module.exports = require("@nestjs/passport");
 
 /***/ }),
-/* 17 */
+/* 18 */
 /***/ ((module) => {
 
 module.exports = require("passport-jwt");
 
 /***/ }),
-/* 18 */
+/* 19 */
 /***/ ((module) => {
 
 module.exports = require("@nestjs-modules/mailer/dist/adapters/handlebars.adapter");
 
 /***/ }),
-/* 19 */
+/* 20 */
 /***/ ((module) => {
 
 module.exports = require("path");

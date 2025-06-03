@@ -5,7 +5,7 @@ import { User } from './schema/user.schema';
 
 @Controller('users')
 export class UserController {
-  constructor(private readonly userService: UserService) {}
+  constructor(private readonly userService: UserService) { }
 
   // ---------- HTTP ENDPOINTS ----------
   @Get('email/:emailid')
@@ -37,5 +37,9 @@ export class UserController {
   @MessagePattern({ cmd: 'account-create' })
   async handleAccountCreate(@Payload() data: Partial<User>): Promise<User> {
     return this.userService.create(data);
+  }
+  @MessagePattern({ cmd: 'update-password' })
+  async handleUpdatePassword(data: { emailid: string; pwd: string }) {
+    return this.userService.updatePasswordByEmail(data.emailid, data.pwd);
   }
 }

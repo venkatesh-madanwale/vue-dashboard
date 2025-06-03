@@ -61,7 +61,7 @@ export class AuthService {
         // return { "msg": "Login Successful", "email": user.emailid, "name": user.name, "token": token };
         return {
             msg: "Login Successful",
-            _id : user._id,
+            _id: user._id,
             email: user.emailid,
             name: user.name,
             role: user.role,       // role
@@ -89,15 +89,38 @@ export class AuthService {
         const payload = { emailid: user?.emailid }
         const token = this.jwtService.sign(payload);
         // const resetLink = `${this.configService.get<string>('RESET_LINK')} : ${this.configService.get<string>('RESET_LINK_PORT')}/reset-password?token=${token}`
-        const resetLink = `http://${this.configService.get('RESET_LINK')}:${this.configService.get('RESET_LINK_PORT')}/reset-password?token=${token}`;
+        // const resetLink = `http://${this.configService.get('RESET_LINK')}:${this.configService.get('RESET_LINK_PORT')}/reset-password?token=${token}`;
 
         await this.mailerService.sendMail({
-            to: user.email,
+            to: user.emailid,
             subject: 'Reset your Password',
-            html: `<p>Click <a href = "${resetLink}">here</a> to reset your password</p>`
+            html: `<p>here is your token "${token}" to reset your password</p>`
         })
         return {
             msg: "Reset Link send Successfully"
+        }
+    }
+    async resetPassword(token: string, newPassword: string) {
+        try {
+            const payload: any = this.jwtService.verify(token);
+
+            const user = await firstValueFrom(
+                this.userClient.send({ cmd: "find-by-email" }, payload.emailid)
+            );
+
+            if (!user) {
+                throw new NotFoundException("Invalid token or user no longer exists");
+            }
+
+            const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+            await firstValueFrom(
+                this.userClient.send({ cmd: "update-password" }, { emailid: payload.emailid, pwd: hashedPassword })
+            );
+
+            return { msg: "Password updated successfully" };
+        } catch (err) {
+            throw new UnauthorizedException("Invalid or expired token");
         }
     }
 }

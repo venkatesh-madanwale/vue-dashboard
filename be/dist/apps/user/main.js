@@ -128,6 +128,13 @@ let UserService = class UserService {
         }
         return { message: 'User deleted successfully' };
     }
+    async updatePasswordByEmail(emailid, hashedPwd) {
+        const updatedUser = await this.userModel.findOneAndUpdate({ emailid }, { pwd: hashedPwd }, { new: true });
+        if (!updatedUser) {
+            throw new common_1.NotFoundException(`User with email ${emailid} not found`);
+        }
+        return updatedUser;
+    }
 };
 exports.UserService = UserService;
 exports.UserService = UserService = __decorate([
@@ -244,6 +251,9 @@ let UserController = class UserController {
     async handleAccountCreate(data) {
         return this.userService.create(data);
     }
+    async handleUpdatePassword(data) {
+        return this.userService.updatePasswordByEmail(data.emailid, data.pwd);
+    }
 };
 exports.UserController = UserController;
 __decorate([
@@ -289,6 +299,12 @@ __decorate([
     __metadata("design:paramtypes", [typeof (_h = typeof Partial !== "undefined" && Partial) === "function" ? _h : Object]),
     __metadata("design:returntype", typeof (_j = typeof Promise !== "undefined" && Promise) === "function" ? _j : Object)
 ], UserController.prototype, "handleAccountCreate", null);
+__decorate([
+    (0, microservices_1.MessagePattern)({ cmd: 'update-password' }),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], UserController.prototype, "handleUpdatePassword", null);
 exports.UserController = UserController = __decorate([
     (0, common_1.Controller)('users'),
     __metadata("design:paramtypes", [typeof (_a = typeof user_service_1.UserService !== "undefined" && user_service_1.UserService) === "function" ? _a : Object])

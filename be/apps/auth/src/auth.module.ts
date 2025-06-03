@@ -62,8 +62,8 @@ import { join } from "path";
                 //   port: 587,
                 secure: true, // true for port 465, false for other ports
                 auth: {
-                    user: "madanwalevenkateshj@gmail.com",
-                    pass: "mmxlachsojszmst",
+                    user : "serverdata516@gmail.com",
+                    pass : "avlvzrebujvjgmal"
                 },
             },
             defaults: {
