@@ -33,17 +33,26 @@ const routes: Array<RouteRecordRaw> = [
     {
         path: "/helpfaq",
         name: "HelpFAQ",
-        component: HelpFAQ
+        component: HelpFAQ,
+        meta: {
+            requiresAuth: true
+        }
     },
     {
         path: "/releasenotes",
         name: "ReleaseNotes",
-        component: ReleaseNotes
+        component: ReleaseNotes,
+        meta: {
+            requiresAuth: true
+        }
     },
     {
         path: "/setting",
         name: "Setting",
-        component: Setting
+        component: Setting,
+        meta: {
+            requiresAuth: true
+        }
     },
 ]
 
