@@ -3,6 +3,9 @@ import Login from "../views/Login.vue";
 import Dashboard from "../views/Dashboard.vue";
 import Register from "../views/Register.vue";
 import { useAuthStore } from "../stores/auth";
+import HelpFAQ from "../components/layout/HelpFAQ.vue";
+import ReleaseNotes from "../components/layout/ReleaseNotes.vue";
+import Setting from "../components/layout/Setting.vue";
 
 const routes: Array<RouteRecordRaw> = [
     {
@@ -26,7 +29,22 @@ const routes: Array<RouteRecordRaw> = [
         meta: {
             requiresAuth: true
         }
-    }
+    },
+    {
+        path: "/helpfaq",
+        name: "HelpFAQ",
+        component: HelpFAQ
+    },
+    {
+        path: "/releasenotes",
+        name: "ReleaseNotes",
+        component: ReleaseNotes
+    },
+    {
+        path: "/setting",
+        name: "Setting",
+        component: Setting
+    },
 ]
 
 const router = createRouter({ history: createWebHistory(), routes })

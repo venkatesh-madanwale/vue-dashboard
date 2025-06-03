@@ -21,18 +21,13 @@
           </router-link>
         </li>
         <li>
-          <router-link to="/products/update" class="block hover:text-blue-300">
+          <router-link to="/products/addproduct" class="block hover:text-blue-300">
+            Add Products
+          </router-link>
+        </li>
+        <li>
+          <router-link to="/products/editproduct" class="block hover:text-blue-300">
             Update Products
-          </router-link>
-        </li>
-        <li>
-          <router-link to="/products/add" class="block hover:text-blue-300">
-            Add Product
-          </router-link>
-        </li>
-        <li>
-          <router-link to="/products/delete" class="block hover:text-blue-300">
-            Delete Products
           </router-link>
         </li>
       </ul>
