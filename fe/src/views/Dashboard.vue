@@ -5,13 +5,13 @@
     </h1>
     <div class="bg-white shadow-md rounded p-4 max-w-md">
       <p>
-        <strong>Name: {{ name }}</strong>
+        <strong>Name: {{ authStore.user?.name }}</strong>
       </p>
       <p>
-        <strong>Email: {{ email }}</strong>
+        <strong>Email: {{ authStore.user?.email }}</strong>
       </p>
       <p>
-        <strong>Role: {{ role }}</strong>
+        <strong>Role: {{ authStore.user?.role }}</strong>
       </p>
     </div>
   </div>
@@ -22,7 +22,7 @@ import { useAuthStore } from "../stores/auth"
 import { storeToRefs } from "pinia"
 
 const authStore = useAuthStore()
-const { email, name, role } = storeToRefs(authStore)
+// const { email, name, role } = storeToRefs(authStore.user)
 </script>
 
 
