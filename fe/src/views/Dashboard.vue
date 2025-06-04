@@ -37,7 +37,7 @@ onMounted(() => {
   // If no user or not admin, redirect
   if (!user || user.role !== 'admin') {
     alert('Access denied. Admins only.')
-    router.push('/') // Or use router.replace('/login')
+    router.push('/')
   }
 })
 </script>

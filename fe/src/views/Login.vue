@@ -23,16 +23,35 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue"
+import { ref, watch } from "vue"
 import { useAuthStore } from "../stores/auth"
 import axios from "axios"
 import { useRouter } from "vue-router"
+import { onMounted, onUpdated, onUnmounted } from "vue"
+
 
 const emailid = ref("")
 const pwd = ref("")
 
 const router = useRouter()
 const authStore = useAuthStore()
+
+// // watch for changes to email
+// watch(emailid, (newval, oldval) => {
+//   console.log(`email changed from ${oldval} to ${newval}`)
+// })
+
+// onMounted(() => {
+//   console.log("component mounted")
+// })
+
+// onUpdated(() => {
+//   console.log("component updated")
+// })
+
+// onUnmounted(() => {
+//   console.log("component destroyed")
+// })
 
 const handleLogin = async () => {
   try {

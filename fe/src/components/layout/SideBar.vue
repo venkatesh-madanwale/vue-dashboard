@@ -10,23 +10,24 @@
             Login
           </router-link>
         </li>
-        <li>
+        <!-- Show only if logged in -->
+        <li v-if="isLoggedIn">
           <router-link to="/dashboard" class="block hover:text-blue-300">
             Dashboard
           </router-link>
         </li>
         <li>
-          <router-link to="/allproducts" class="block hover:text-blue-300">
+          <router-link v-if="isLoggedIn" to="/allproducts" class="block hover:text-blue-300">
             All Products
           </router-link>
         </li>
         <li>
-          <router-link to="/addproducts" class="block hover:text-blue-300">
+          <router-link v-if="isLoggedIn" to="/addproducts" class="block hover:text-blue-300">
             Add Products
           </router-link>
         </li>
         <li>
-          <router-link to="/editproduct" class="block hover:text-blue-300">
+          <router-link v-if="isLoggedIn" to="/editproduct" class="block hover:text-blue-300">
             Update Products
           </router-link>
         </li>
@@ -34,3 +35,12 @@
     </nav>
   </aside>
 </template>
+
+<script setup lang="ts">
+import { useAuthStore } from '../../stores/auth';
+import { computed } from 'vue';
+
+const auth = useAuthStore()
+const isLoggedIn = computed(()=> !!auth.token)
+
+</script>

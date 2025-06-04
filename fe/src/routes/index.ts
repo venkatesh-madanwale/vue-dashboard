@@ -9,6 +9,7 @@ import Setting from "../components/layout/Setting.vue";
 import ProductList from "../views/ProductList.vue";
 import ProductDetail from "../views/ProductDetail.vue";
 import AddProducts from "../views/AddProducts.vue";
+import ProfileForm from "../views/ProfileForm.vue";
 
 const routes: Array<RouteRecordRaw> = [
     {
@@ -76,6 +77,11 @@ const routes: Array<RouteRecordRaw> = [
         path: "/addproducts",
         name: "AddProducts",
         component: AddProducts
+    },
+    {
+        path: "/profileform",
+        name: "ProfileForm",
+        component: ProfileForm
     },
 ]
 
