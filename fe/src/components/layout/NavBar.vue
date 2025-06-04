@@ -5,7 +5,8 @@
     </h1>
     <div class="relative" ref="dropdownRef">
       <button @click="toggleDropdown" v-if="auth.token">
-        <img src="https://i.pravatar.cc/40" alt="profile" class="w-10 h-10 rounded-full border" />
+        <!-- <img src="https://i.pravatar.cc/40" alt="profile" class="w-10 h-10 rounded-full border" /> -->
+        <img src="https://img.freepik.com/free-vector/business-user-shield_78370-7029.jpg" alt="profile" class="w-10 h-10 rounded-full border" />
       </button>
 
       <!-- Dropdown -->

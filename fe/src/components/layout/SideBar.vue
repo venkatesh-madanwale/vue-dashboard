@@ -5,7 +5,7 @@
     </div>
     <nav class="flex-1 p-4">
       <ul class="space-y-4">
-        <li>
+        <li v-if="isnotLoggedIn">
           <router-link to="/" class="block hover:text-blue-300">
             Login
           </router-link>
@@ -27,8 +27,13 @@
           </router-link>
         </li>
         <li>
-          <router-link v-if="isLoggedIn" to="/editproduct" class="block hover:text-blue-300">
-            Update Products
+          <router-link v-if="isLoggedIn" to="/userlist" class="block hover:text-blue-300">
+            All users
+          </router-link>
+        </li>
+        <li>
+          <router-link v-if="isLoggedIn" to="/alltransactions" class="block hover:text-blue-300">
+            All Transactions
           </router-link>
         </li>
       </ul>
@@ -42,5 +47,6 @@ import { computed } from 'vue';
 
 const auth = useAuthStore()
 const isLoggedIn = computed(()=> !!auth.token)
+const isnotLoggedIn = computed(()=> !auth.token)
 
 </script>

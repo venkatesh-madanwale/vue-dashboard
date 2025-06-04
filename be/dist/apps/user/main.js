@@ -102,6 +102,9 @@ let UserService = class UserService {
     constructor(userModel) {
         this.userModel = userModel;
     }
+    async findall() {
+        return this.userModel.find().exec();
+    }
     async findByEmail(emailid) {
         return this.userModel.findOne({ emailid });
     }
@@ -222,7 +225,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-var _a, _b, _c, _d, _e, _f, _g, _h, _j;
+var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.UserController = void 0;
 const common_1 = __webpack_require__(3);
@@ -236,6 +239,9 @@ let UserController = class UserController {
     async findByEmail(emailid) {
         return this.userService.findByEmail(emailid);
     }
+    async findAll() {
+        return this.userService.findall();
+    }
     async create(data) {
         return this.userService.create(data);
     }
@@ -247,6 +253,9 @@ let UserController = class UserController {
     }
     async handleFindByEmail(emailid) {
         return this.userService.findByEmail(emailid);
+    }
+    async handleFindAll() {
+        return this.userService.findall();
     }
     async handleAccountCreate(data) {
         return this.userService.create(data);
@@ -264,40 +273,52 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "findByEmail", null);
 __decorate([
+    (0, common_1.Get)('/getAll'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", typeof (_b = typeof Promise !== "undefined" && Promise) === "function" ? _b : Object)
+], UserController.prototype, "findAll", null);
+__decorate([
     (0, common_1.Post)(),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [typeof (_b = typeof Partial !== "undefined" && Partial) === "function" ? _b : Object]),
-    __metadata("design:returntype", typeof (_c = typeof Promise !== "undefined" && Promise) === "function" ? _c : Object)
+    __metadata("design:paramtypes", [typeof (_c = typeof Partial !== "undefined" && Partial) === "function" ? _c : Object]),
+    __metadata("design:returntype", typeof (_d = typeof Promise !== "undefined" && Promise) === "function" ? _d : Object)
 ], UserController.prototype, "create", null);
 __decorate([
     (0, common_1.Patch)(':id'),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, typeof (_d = typeof Partial !== "undefined" && Partial) === "function" ? _d : Object]),
-    __metadata("design:returntype", typeof (_e = typeof Promise !== "undefined" && Promise) === "function" ? _e : Object)
+    __metadata("design:paramtypes", [String, typeof (_e = typeof Partial !== "undefined" && Partial) === "function" ? _e : Object]),
+    __metadata("design:returntype", typeof (_f = typeof Promise !== "undefined" && Promise) === "function" ? _f : Object)
 ], UserController.prototype, "update", null);
 __decorate([
     (0, common_1.Delete)(':id'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", typeof (_f = typeof Promise !== "undefined" && Promise) === "function" ? _f : Object)
+    __metadata("design:returntype", typeof (_g = typeof Promise !== "undefined" && Promise) === "function" ? _g : Object)
 ], UserController.prototype, "delete", null);
 __decorate([
     (0, microservices_1.MessagePattern)({ cmd: 'find-by-email' }),
     __param(0, (0, microservices_1.Payload)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", typeof (_g = typeof Promise !== "undefined" && Promise) === "function" ? _g : Object)
+    __metadata("design:returntype", typeof (_h = typeof Promise !== "undefined" && Promise) === "function" ? _h : Object)
 ], UserController.prototype, "handleFindByEmail", null);
+__decorate([
+    (0, microservices_1.MessagePattern)({ cmd: 'find-all' }),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", typeof (_j = typeof Promise !== "undefined" && Promise) === "function" ? _j : Object)
+], UserController.prototype, "handleFindAll", null);
 __decorate([
     (0, microservices_1.MessagePattern)({ cmd: 'account-create' }),
     __param(0, (0, microservices_1.Payload)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [typeof (_h = typeof Partial !== "undefined" && Partial) === "function" ? _h : Object]),
-    __metadata("design:returntype", typeof (_j = typeof Promise !== "undefined" && Promise) === "function" ? _j : Object)
+    __metadata("design:paramtypes", [typeof (_k = typeof Partial !== "undefined" && Partial) === "function" ? _k : Object]),
+    __metadata("design:returntype", typeof (_l = typeof Promise !== "undefined" && Promise) === "function" ? _l : Object)
 ], UserController.prototype, "handleAccountCreate", null);
 __decorate([
     (0, microservices_1.MessagePattern)({ cmd: 'update-password' }),

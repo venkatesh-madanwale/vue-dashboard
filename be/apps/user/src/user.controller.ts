@@ -12,6 +12,10 @@ export class UserController {
   async findByEmail(@Param('emailid') emailid: string) {
     return this.userService.findByEmail(emailid);
   }
+  @Get('/getAll')
+  async findAll(): Promise<User[]> {
+    return this.userService.findall();
+  }
 
   @Post()
   async create(@Body() data: Partial<User>): Promise<User> {
@@ -32,6 +36,10 @@ export class UserController {
   @MessagePattern({ cmd: 'find-by-email' })
   async handleFindByEmail(@Payload() emailid: string): Promise<User | null> {
     return this.userService.findByEmail(emailid);
+  }
+  @MessagePattern({ cmd: 'find-all' })
+  async handleFindAll(): Promise<User[]> {
+    return this.userService.findall();
   }
 
   @MessagePattern({ cmd: 'account-create' })

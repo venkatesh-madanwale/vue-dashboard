@@ -11,6 +11,10 @@ import { Model } from 'mongoose';
 export class UserService {
     constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {
     }
+    //find all users
+    async findall(): Promise<User[]> {
+        return this.userModel.find().exec();
+    }
     //find user by email
     async findByEmail(emailid: string): Promise<User | null> {
         return this.userModel.findOne({ emailid });

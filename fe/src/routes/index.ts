@@ -10,6 +10,9 @@ import ProductList from "../views/ProductList.vue";
 import ProductDetail from "../views/ProductDetail.vue";
 import AddProducts from "../views/AddProducts.vue";
 import ProfileForm from "../views/ProfileForm.vue";
+import UpdateProduct from "../views/UpdateProduct.vue";
+import UserList from "../views/UserList.vue";
+import AllTrasactions from "../views/AllTrasactions.vue";
 
 const routes: Array<RouteRecordRaw> = [
     {
@@ -83,6 +86,22 @@ const routes: Array<RouteRecordRaw> = [
         name: "ProfileForm",
         component: ProfileForm
     },
+    {
+        path: '/products/update/:id',
+        name: 'ProductUpdate',
+        // component: () => import('../views/UpdateProduct.vue')
+        component : UpdateProduct
+    },
+    {
+        path: '/userlist',
+        name: 'UserList',
+        component : UserList
+    },
+    {
+        path: '/alltransactions',
+        name: 'AllTransactions',
+        component : AllTrasactions
+    }
 ]
 
 const router = createRouter({ history: createWebHistory(), routes })

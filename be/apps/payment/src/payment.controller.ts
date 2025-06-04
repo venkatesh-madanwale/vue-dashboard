@@ -11,7 +11,7 @@ export class PaymentController {
     return this.service.addTransaction(dto);
   }
 
-  @Get()
+  @Get("/allTransactions")
   async getAll() {
     return this.service.getAll();
   }

@@ -20,6 +20,13 @@ export const useProductStore = defineStore('products', {
         this.loading = false;
       }
     },
+    async deleteProduct(id: string) {
+      try {
+        await axios.delete(`http://localhost:3002/products/${id}`);
+      } catch (error) {
+        throw new Error('Failed to delete product');
+      }
+    }
   },
 });
 interface Product {
