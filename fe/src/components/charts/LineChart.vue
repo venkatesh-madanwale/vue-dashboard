@@ -8,11 +8,11 @@ import { Chart as ChartJS, Title, Tooltip, Legend, PointElement, LineElement, Ca
 
 
 const lineData = {
-    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+    labels: ['Jan 25', 'Feb 25', 'Mar 25', 'Apr 25', 'May 25', 'Jun 25'],
     datasets: [
         {
             label: 'Revenue (₹)',
-            data: [12000, 19000, 30000, 25000, 22000, 28000],
+            data: [120000, 190000, 300000, 250000, 220000, 280000],
             fill: false,
             borderColor: '#10b981',
             tension: 0.4,

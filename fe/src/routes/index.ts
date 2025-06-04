@@ -90,17 +90,17 @@ const routes: Array<RouteRecordRaw> = [
         path: '/products/update/:id',
         name: 'ProductUpdate',
         // component: () => import('../views/UpdateProduct.vue')
-        component : UpdateProduct
+        component: UpdateProduct
     },
     {
         path: '/userlist',
         name: 'UserList',
-        component : UserList
+        component: UserList
     },
     {
         path: '/alltransactions',
         name: 'AllTransactions',
-        component : AllTrasactions
+        component: AllTrasactions
     }
 ]
 
@@ -109,6 +109,9 @@ router.beforeEach((to, from, next) => {
     const authStore = useAuthStore()
     if (to.meta.requiresAuth && !authStore.token) {
         next('/login')
+    }
+    else if (to.meta.requiresAdmin && authStore.user?.role !== 'admin') {
+        next('/not-authorized')
     }
     else {
         next()

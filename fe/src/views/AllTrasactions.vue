@@ -3,13 +3,13 @@
         <h2 class="text-2xl font-semibold mb-4">My Transactions</h2>
 
         <!-- Search bar -->
-        <!-- <input type="text" v-model="searchEmail" placeholder="Search by user email..."
-            class="mb-4 p-2 border border-gray-300 rounded w-full max-w-md" /> -->
+        <input type="text" v-model="searchEmail" placeholder="Search by user email..."
+            class="mb-4 p-2 border border-gray-300 rounded w-full max-w-md" />
 
         <!-- Export Button -->
-        <!-- <button @click="exportCSV" class="mb-4 ml-2 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
+        <button @click="exportCSV" class="mb-4 ml-2 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
             Export CSV
-        </button> -->
+        </button>
 
         <div v-if="loading">Loading transactions...</div>
         <div v-else-if="error" class="text-red-600">{{ error }}</div>
