@@ -6,6 +6,9 @@ import { useAuthStore } from "../stores/auth";
 import HelpFAQ from "../components/layout/HelpFAQ.vue";
 import ReleaseNotes from "../components/layout/ReleaseNotes.vue";
 import Setting from "../components/layout/Setting.vue";
+import ProductList from "../views/ProductList.vue";
+import ProductDetail from "../views/ProductDetail.vue";
+import AddProducts from "../views/AddProducts.vue";
 
 const routes: Array<RouteRecordRaw> = [
     {
@@ -53,6 +56,26 @@ const routes: Array<RouteRecordRaw> = [
         meta: {
             requiresAuth: true
         }
+    },
+    {
+        path: "/allproducts",
+        name: "ProductList",
+        component: ProductList
+    },
+    {
+        path: '/products/:id',   // dynamic route
+        name: 'ProductDetail',
+        component: ProductDetail,
+    },
+    {
+        path: "/allproducts",
+        name: "ProductList",
+        component: ProductList
+    },
+    {
+        path: "/addproducts",
+        name: "AddProducts",
+        component: AddProducts
     },
 ]
 

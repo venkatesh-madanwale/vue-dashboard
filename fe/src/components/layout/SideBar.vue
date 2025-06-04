@@ -16,17 +16,17 @@
           </router-link>
         </li>
         <li>
-          <router-link to="/products" class="block hover:text-blue-300">
+          <router-link to="/allproducts" class="block hover:text-blue-300">
             All Products
           </router-link>
         </li>
         <li>
-          <router-link to="/products/addproduct" class="block hover:text-blue-300">
+          <router-link to="/addproducts" class="block hover:text-blue-300">
             Add Products
           </router-link>
         </li>
         <li>
-          <router-link to="/products/editproduct" class="block hover:text-blue-300">
+          <router-link to="/editproduct" class="block hover:text-blue-300">
             Update Products
           </router-link>
         </li>

@@ -3,7 +3,7 @@ import { Document } from 'mongoose';
 
 @Schema()
 export class Payment extends Document {
-  @Prop({ required: true, unique: true })
+  @Prop()
   emailid: string;
 
   @Prop({ type: Array, default: [] })

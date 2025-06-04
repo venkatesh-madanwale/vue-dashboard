@@ -16,7 +16,7 @@ export const useAuthStore = defineStore('auth', {// Defining a new store named '
             email: string,
             name: string,
             role: string,
-            token: string
+            token: string,
         }
     }),
 
@@ -27,11 +27,22 @@ export const useAuthStore = defineStore('auth', {// Defining a new store named '
 
         setUser(user: { msg: string, _id: string, email: string, name: string, role: string, token: string }) {
             this.user = user;
+            localStorage.setItem('auth', JSON.stringify(user));
         },
 
         logout() {
             this.token = "";
             this.user = null;
+            localStorage.removeItem('auth');
+        },
+        
+        loadUserFromStorage() {
+            const saved = localStorage.getItem('auth');
+            if (saved) {
+                const parsed = JSON.parse(saved);
+                this.user = parsed;
+                this.token = parsed.token;
+            }
         }
     }
 })

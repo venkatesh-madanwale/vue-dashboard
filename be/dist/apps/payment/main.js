@@ -158,7 +158,7 @@ let PaymentService = class PaymentService {
         }
         else {
             return this.model.create({
-                email: dto.emailid,
+                emailid: dto.emailid,
                 transactions: [dto.transaction],
             });
         }
@@ -208,7 +208,7 @@ let Payment = class Payment extends mongoose_2.Document {
 };
 exports.Payment = Payment;
 __decorate([
-    (0, mongoose_1.Prop)({ required: true, unique: true }),
+    (0, mongoose_1.Prop)(),
     __metadata("design:type", String)
 ], Payment.prototype, "emailid", void 0);
 __decorate([

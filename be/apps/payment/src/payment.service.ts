@@ -15,7 +15,7 @@ export class PaymentService {
       return record.save();
     } else {
       return this.model.create({
-        email: dto.emailid,
+        emailid: dto.emailid,
         transactions: [dto.transaction],
       });
     }
